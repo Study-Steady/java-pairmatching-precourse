@@ -1,5 +1,6 @@
 package pairmatching.controller;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 import pairmatching.domain.crew.CrewRepository;
 import pairmatching.domain.parimatching.PairMatcher;
@@ -38,14 +39,43 @@ public class MainController {
     }
 
     public void run() {
-        FunctionChoice choice = inputChoice();
         PairMatcher pairMatcher = new PairMatcher(crewRepository, pairMatchingHistoryRepository);
 
-        if (choice.isPairMatching()) {
-            PairMatchingRequest request = inputPairMatchingRequest();
-            PairMatchingHistory history = pairMatcher.match(request);
-            outputView.showPairMatchingHistory(history);
+        FunctionChoice choice = inputChoice();
+
+        while (!choice.isQuit()) {
+            if (choice.isPairMatching()) {
+                matchPair(pairMatcher);
+            }
+            if (choice.isQueryPair()) {
+                queryHistory(inputPairMatchingRequest());
+            }
+            if (choice.isInitialization()) {
+                initializeHistory();
+            }
+            choice = inputChoice();
         }
+
+    }
+
+    private void initializeHistory() {
+        this.pairMatchingHistoryRepository.initialize();
+    }
+
+    private void matchPair(PairMatcher pairMatcher) {
+        PairMatchingRequest request = inputPairMatchingRequest();
+        PairMatchingHistory history = pairMatcher.match(request);
+        outputView.showPairMatchingHistory(history);
+    }
+
+    private void queryHistory(PairMatchingRequest request) {
+        Optional<PairMatchingHistory> historyOptional = pairMatchingHistoryRepository.findOne(request);
+
+        if (historyOptional.isPresent()) {
+            outputView.showPairMatchingHistory(historyOptional.get());
+            return;
+        }
+        outputView.showErrorMessage("매칭 이력이 없습니다.");
     }
 
     private PairMatchingRequest inputPairMatchingRequest() {

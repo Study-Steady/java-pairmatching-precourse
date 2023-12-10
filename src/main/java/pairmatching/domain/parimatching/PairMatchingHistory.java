@@ -16,6 +16,10 @@ public class PairMatchingHistory {
         this.pairs = pairs;
     }
 
+    public boolean matches(Course course, Mission mission) {
+        return this.course == course && this.mission == mission;
+    }
+
     public List<Pair> getPairs() {
         return pairs;
     }

@@ -28,4 +28,16 @@ public enum FunctionChoice {
         return this == PAIR_MATCHING;
     }
 
+    public boolean isQuit() {
+        return this == QUIT;
+    }
+
+    public boolean isQueryPair() {
+        return this == QUERY_PAIR;
+    }
+
+    public boolean isInitialization() {
+        return this == INITIALIZATION;
+    }
+
 }

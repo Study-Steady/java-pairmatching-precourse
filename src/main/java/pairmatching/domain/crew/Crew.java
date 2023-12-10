@@ -39,6 +39,10 @@ public class Crew {
         otherCrews.forEach(othreCrew -> addMetHistory(mission, othreCrew));
     }
 
+    public void clearMetHistory() {
+        this.metHistory.clear();
+    }
+
     public boolean matchesCourse(Course course) {
         return this.course.is(course);
     }
