@@ -7,7 +7,7 @@ import pairmatching.view.OutputView;
 public class Application {
 
     public static void main(String[] args) {
-        MainController mainController = new MainController(new InputView(), new OutputView());
+        MainController mainController = MainController.of(new InputView(), new OutputView());
         mainController.run();
     }
 
