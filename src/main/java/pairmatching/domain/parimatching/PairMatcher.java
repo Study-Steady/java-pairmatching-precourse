@@ -25,7 +25,7 @@ public class PairMatcher {
         int retryCount = MAX_RETRY_COUNT;
 
         while (retryCount > 0) {
-            List<String> shuffledCrew = Randoms.shuffle(crewNames);
+            List<String> shuffledCrew = new ArrayList<>(Randoms.shuffle(crewNames));
             List<Pair> pairs = createNewPairs(shuffledCrew, request.getCourse());
 
             if (hasPairsMet(request, pairs)) {
