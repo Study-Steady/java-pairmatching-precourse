@@ -68,13 +68,4 @@ public class Crew {
         return Objects.hash(course, name);
     }
 
-    @Override
-    public String toString() {
-        return "Crew{" +
-                "course=" + course +
-                ", name='" + name + '\'' +
-                ", metHistory=" + metHistory +
-                '}';
-    }
-
 }
