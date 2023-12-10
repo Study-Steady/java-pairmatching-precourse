@@ -4,6 +4,7 @@ package pairmatching.view;
 import pairmatching.common.Symbol;
 import pairmatching.domain.CurriculumDetail;
 import pairmatching.domain.MainOption;
+import pairmatching.domain.RematchOption;
 import pairmatching.util.converter.Converter;
 import pairmatching.view.printer.Printer;
 import pairmatching.view.reader.Reader;
@@ -52,6 +53,13 @@ public class InputView {
         String curriculumDetail = reader.readLine();
         validator.validateCurriculumDetail(curriculumDetail, "과정, 레벨, 미션");
         return CurriculumDetail.of(Converter.splitToTrimedList(Symbol.COMMA, curriculumDetail));
+    }
+
+    public RematchOption inputRematchOption() {
+        printer.printLine("매칭 정보가 있습니다. 다시 매칭하시겠습니까?");
+        String rematchOption = reader.readLine();
+        validator.validateRematchOption(rematchOption, "재매치 여부");
+        return RematchOption.from(rematchOption);
     }
 
 //    public Template inputTemplate() {

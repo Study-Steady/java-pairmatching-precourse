@@ -32,6 +32,10 @@ public class InputValidator {
         GeneralValidator.validateSplittedCount(CURRICULUM_DETAIL_SEPARATOR, curriculumDetail, 3, target);
     }
 
+    public void validateRematchOption(String rematchOption, String target) {
+        StringValidator.validateBlank(rematchOption, target);
+    }
+
 //    public static void validateNumber(String template, String target) {
 //        StringValidator.validateBlank(template, target);
 //        StringValidator.validateNumeric(template, target);

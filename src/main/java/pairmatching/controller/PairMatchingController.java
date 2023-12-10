@@ -5,6 +5,7 @@ import pairmatching.domain.CurriculumDetail;
 import pairmatching.domain.MainOption;
 import pairmatching.domain.PairsGenerator;
 import pairmatching.domain.PairsStorage;
+import pairmatching.domain.RematchOption;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -21,9 +22,48 @@ public class PairMatchingController {
 
     public void run() {
         MainOption mainOption = inputView.inputMainOption();
-        CurriculumDetail curriculumDetail = inputView.inputCurriculumDetail();
         PairsStorage pairsStorage = PairsStorage.init();
+
+        handlePairMatching(mainOption, pairsStorage);
+        handlePairSearching(mainOption, pairsStorage);
+        handlePairInit(mainOption);
+
+    }
+
+    private void handlePairInit(MainOption mainOption) {
+        PairsStorage pairsStorage;
+        if (mainOption.isFairInit()) {
+            pairsStorage = PairsStorage.init();
+            run();
+        }
+    }
+
+    private void handlePairSearching(MainOption mainOption, PairsStorage pairsStorage) {
+        if (mainOption.isFairSearching()) {
+            CurriculumDetail curriculumDetail = inputView.inputCurriculumDetail();
+
+            if (pairsStorage.containsOf(curriculumDetail)) {
+                outputView.printPairsMatching(pairsStorage, curriculumDetail);
+            }
+
+            if (!pairsStorage.containsOf(curriculumDetail)) {
+                outputView.printNoRecord();
+                run();
+            }
+        }
+    }
+
+    private void handlePairMatching(MainOption mainOption, PairsStorage pairsStorage) {
         if (mainOption.isFairMatching()) {
+            CurriculumDetail curriculumDetail = inputView.inputCurriculumDetail();
+
+            if (pairsStorage.containsOf(curriculumDetail)) {
+                RematchOption rematchOption = inputView.inputRematchOption();
+
+                if (!rematchOption.isRematch()) {
+                    run();
+                }
+            }
             pairsStorage.addMathcingsOf(curriculumDetail, pairsGenerator);
             outputView.printPairsMatching(pairsStorage, curriculumDetail);
         }

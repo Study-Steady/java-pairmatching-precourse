@@ -38,4 +38,8 @@ public class OutputView {
         String pairMathcing = OutputFomatter.toPairMatching(pair);
         printer.printLine(pairMathcing);
     }
+
+    public void printNoRecord() {
+        printer.printLine("[ERROR] 매칭 이력이 없습니다.");
+    }
 }

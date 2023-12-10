@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum MainOption {
     FAIR_MATCHING("1"),
-    FAIR_SEARCH("2"),
+    FAIR_SEARCHING("2"),
     FAIR_INIT("3"),
     QUIT("Q"),
     ;
@@ -24,5 +24,13 @@ public enum MainOption {
 
     public boolean isFairMatching() {
         return this.equals(FAIR_MATCHING);
+    }
+
+    public boolean isFairSearching() {
+        return this.equals(FAIR_SEARCHING);
+    }
+
+    public boolean isFairInit() {
+        return this.equals(FAIR_INIT);
     }
 }

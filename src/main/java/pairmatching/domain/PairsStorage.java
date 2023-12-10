@@ -35,4 +35,8 @@ public class PairsStorage {
     public Map<CurriculumDetail, Pairs> getPairsStorage() {
         return pairsStorage;
     }
+
+    public boolean containsOf(CurriculumDetail curriculumDetail) {
+        return pairsStorage.containsKey(curriculumDetail);
+    }
 }
