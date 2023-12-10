@@ -26,7 +26,7 @@ public class PairMatcher {
 
         while (retryCount > 0) {
             List<String> shuffledCrew = Randoms.shuffle(crewNames);
-            List<Pair> pairs = createNewPairs(shuffledCrew, crewNames, request.getCourse());
+            List<Pair> pairs = createNewPairs(shuffledCrew, request.getCourse());
 
             if (hasPairsMet(request, pairs)) {
                 retryCount--;
@@ -53,12 +53,12 @@ public class PairMatcher {
         );
     }
 
-    private List<Pair> createNewPairs(List<String> shuffledCrew, List<String> crewNames, Course course) {
+    private List<Pair> createNewPairs(List<String> shuffledCrew, Course course) {
         List<Pair> pairs = new ArrayList<>();
 
         while (!shuffledCrew.isEmpty()) {
             if (shuffledCrew.size() == 3 || shuffledCrew.size() == 2) {
-                pairs.add(new Pair(crewRepository.findAllBy(course, crewNames)));
+                pairs.add(new Pair(crewRepository.findAllBy(course, shuffledCrew)));
                 shuffledCrew.clear();
                 continue;
             }
