@@ -36,17 +36,21 @@ public class PairMatcher {
             // crew 들간 만남 추가
             pairs.forEach(pair -> pair.addMetHistory(request.getMission()));
 
-            PairMatchingHistory history = new PairMatchingHistory(
-                    request.getCourse(),
-                    request.getMission(),
-                    pairs
-            );
+            PairMatchingHistory history = createMatchingHistory(request, pairs);
             matchingHistoryRepository.save(history);
 
             return history;
         }
 
         throw new IllegalArgumentException("매칭 기회를 모두 소진했습니다.");
+    }
+
+    private PairMatchingHistory createMatchingHistory(PairMatchingRequest request, List<Pair> pairs) {
+        return new PairMatchingHistory(
+                request.getCourse(),
+                request.getMission(),
+                pairs
+        );
     }
 
     private List<Pair> createNewPairs(List<String> shuffledCrew, List<String> crewNames, Course course) {
@@ -69,7 +73,6 @@ public class PairMatcher {
                 .anyMatch(pair -> pair.hasMet(request.getMission()));
     }
 
-    // 두명 꺼내서 담기
     private void addNewPair(List<String> shuffledCrew, List<Pair> pairs, Course course) {
         int firstIndex = 0;
         int secondIndex = 1;
@@ -80,7 +83,7 @@ public class PairMatcher {
         pairs.add(Pair.of(first, second));
 
         shuffledCrew.remove(firstIndex);
-        shuffledCrew.remove(secondIndex);
+        shuffledCrew.remove(firstIndex);
     }
 
     private List<String> toCrewNames(List<Crew> crews) {
