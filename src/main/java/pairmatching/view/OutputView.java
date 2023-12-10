@@ -1,5 +1,10 @@
 package pairmatching.view;
 
+import java.util.List;
+import pairmatching.domain.CurriculumDetail;
+import pairmatching.domain.Pair;
+import pairmatching.domain.PairsStorage;
+import pairmatching.view.formatter.OutputFomatter;
 import pairmatching.view.printer.Printer;
 
 public class OutputView {
@@ -18,5 +23,19 @@ public class OutputView {
     public void printExceptionMessage(String message) {
         printer.printLine(ERROR_MESSAGE_FORMAT + message);
         printer.printEmptyLine();
+    }
+
+    public void printPairsMatching(PairsStorage pairsStorage, CurriculumDetail curriculumDetail) {
+        List<Pair> pairs = pairsStorage.getPairsStorage().get(curriculumDetail).getPairs();
+
+        printer.printLine("페어 매칭 결과입니다.");
+        pairs.forEach(this::printPairMatching);
+
+        printer.printEmptyLine();
+    }
+
+    private void printPairMatching(Pair pair) {
+        String pairMathcing = OutputFomatter.toPairMatching(pair);
+        printer.printLine(pairMathcing);
     }
 }

@@ -21,4 +21,8 @@ public enum MainOption {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("입력은 1,2,3,Q 중에서 해야합니다."));
     }
+
+    public boolean isFairMatching() {
+        return this.equals(FAIR_MATCHING);
+    }
 }

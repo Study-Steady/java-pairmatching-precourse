@@ -20,4 +20,16 @@ public class CurriculumDetail {
         String mission = curriculumDetail.get(2);
         return new CurriculumDetail(Course.from(course), Level.from(level), Mission.of(Level.from(level), mission));
     }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public boolean isBackEnd() {
+        return course.isBackEnd();
+    }
+
+    public boolean isSameLevel(CurriculumDetail inpuCurriculumDetail) {
+        return this.level.equals(inpuCurriculumDetail.level);
+    }
 }

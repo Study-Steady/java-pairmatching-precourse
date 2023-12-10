@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 import pairmatching.domain.CurriculumDetail;
 import pairmatching.domain.MainOption;
 import pairmatching.domain.PairsGenerator;
+import pairmatching.domain.PairsStorage;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -21,7 +22,12 @@ public class PairMatchingController {
     public void run() {
         MainOption mainOption = inputView.inputMainOption();
         CurriculumDetail curriculumDetail = inputView.inputCurriculumDetail();
-    }지
+        PairsStorage pairsStorage = PairsStorage.init();
+        if (mainOption.isFairMatching()) {
+            pairsStorage.addMathcingsOf(curriculumDetail, pairsGenerator);
+            outputView.printPairsMatching(pairsStorage, curriculumDetail);
+        }
+    }
 
     private <T> T readWithRetry(Supplier<T> supplier) {
         try {

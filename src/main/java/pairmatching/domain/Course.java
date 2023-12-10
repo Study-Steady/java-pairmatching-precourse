@@ -18,4 +18,8 @@ public enum Course {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("입력은 백엔드, 프론트엔드 중에서 해야합니다."));
     }
+
+    public boolean isBackEnd() {
+        return this.equals(BACKEND);
+    }
 }
