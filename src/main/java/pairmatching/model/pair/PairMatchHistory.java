@@ -1,58 +1,33 @@
 package pairmatching.model.pair;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import pairmatching.model.crew.Course;
-import pairmatching.model.crew.Crews;
 import pairmatching.model.crew.Level;
+import pairmatching.model.crew.Mission;
 
 public class PairMatchHistory {
-    private final Map<Level, Map<String, Set<String>>> backendHistory;
-    private final Map<Level, Map<String, Set<String>>> frontendHistory;
+    private final Course course;
+    private final Level level;
+    private final Mission mission;
+    private final Pair pair;
 
-    private PairMatchHistory(Map<Level, Map<String, Set<String>>> backendHistory, Map<Level, Map<String, Set<String>>> frontendHistory) {
-        this.backendHistory = backendHistory;
-        this.frontendHistory = frontendHistory;
+    private PairMatchHistory(Course course, Level level, Mission mission, Pair pair) {
+        this.course = course;
+        this.level = level;
+        this.mission = mission;
+        this.pair = pair;
     }
 
-    public static PairMatchHistory from(Crews crews) {
-        Map<Level, Map<String, Set<String>>> backendHistory = new HashMap<>();
-        Map<Level, Map<String, Set<String>>> frontendHistory = new HashMap<>();
-
-        for (Level level : Level.values()) {
-            backendHistory.put(level, new HashMap<>());
-            frontendHistory.put(level, new HashMap<>());
-
-            for (String backendCrewName : crews.getCrewNames(Course.BACKEND)) {
-                backendHistory.get(level).put(backendCrewName, new HashSet<>());
-            }
-
-            for (String frontendCrewName : crews.getCrewNames(Course.FRONTEND)) {
-                frontendHistory.get(level).put(frontendCrewName, new HashSet<>());
-            }
-        }
-
-        return new PairMatchHistory(backendHistory, frontendHistory);
+    public static PairMatchHistory of(Course course, Level level, Mission mission, Pair pair) {
+        return new PairMatchHistory(course, level, mission, pair);
     }
 
-    public boolean isMatched(Course course, Level level, String crewName1, String crewName2) {
-        if (course == Course.BACKEND) {
-            return backendHistory.get(level).get(crewName1).contains(crewName2);
-        }
-        return frontendHistory.get(level).get(crewName1).contains(crewName2);
+    public boolean checkInfoMatches(Course course, Level level, Mission mission) {
+        return this.course == course && this.level == level && this.mission == mission;
     }
 
-    public void clear() {
-        for (Level level : Level.values()) {
-            for (String backendCrewName : backendHistory.get(level).keySet()) {
-                backendHistory.get(level).get(backendCrewName).clear();
-            }
+    public List<String> getCrewNames() {
+        return pair.getPairCrewNames();
 
-            for (String frontendCrewName : frontendHistory.get(level).keySet()) {
-                frontendHistory.get(level).get(frontendCrewName).clear();
-            }
-        }
     }
 }
