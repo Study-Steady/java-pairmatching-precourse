@@ -29,16 +29,15 @@ public class PairMatchingController {
 
             handlePairMatching(mainOption, pairsStorage);
             handlePairSearching(mainOption, pairsStorage);
-            pairsStorage = handlePairInit(mainOption, pairsStorage);
+            handlePairInit(mainOption, pairsStorage);
         }
 
     }
 
-    private PairsStorage handlePairInit(MainOption mainOption, PairsStorage pairsStorage) {
+    private void handlePairInit(MainOption mainOption, PairsStorage pairsStorage) {
         if (mainOption.isFairInit()) {
-            pairsStorage = PairsStorage.init();
+            pairsStorage.initialize();
         }
-        return pairsStorage;
     }
 
     private void handlePairSearching(MainOption mainOption, PairsStorage pairsStorage) {

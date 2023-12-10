@@ -26,6 +26,10 @@ public class CurriculumDetail {
         return level;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
     public boolean isBackEnd() {
         return course.isBackEnd();
     }

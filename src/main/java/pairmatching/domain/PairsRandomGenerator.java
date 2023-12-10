@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PairsRandomGenerator implements PairsGenerator {
@@ -13,86 +12,64 @@ public class PairsRandomGenerator implements PairsGenerator {
     private final List<String> frontEndCrew;
 
     public PairsRandomGenerator() {
-        List<String> backEndCrew = new ArrayList<>();
-        List<String> frontEndCrew = new ArrayList<>();
+        this.backEndCrew = readCrewFromFile("src/main/resources/backend-crew.md");
+        this.frontEndCrew = readCrewFromFile("src/main/resources/frontend-crew.md");
+    }
 
-        try {
-            BufferedReader backEndReader = new BufferedReader(new FileReader("src/main/resources/backend-crew.md"));
-            BufferedReader frontEndReader = new BufferedReader(new FileReader("src/main/resources/frontend-crew.md"));
-            String crewName = "";
-            while ((crewName = backEndReader.readLine()) != null) {
-                backEndCrew.add(crewName);
-            }
-            while ((crewName = frontEndReader.readLine()) != null) {
-                frontEndCrew.add(crewName);
+    private List<String> readCrewFromFile(String filePath) {
+        List<String> crewList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String crewName;
+            while ((crewName = reader.readLine()) != null) {
+                crewList.add(crewName);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        this.backEndCrew = backEndCrew;
-        this.frontEndCrew = frontEndCrew;
+        return crewList;
     }
 
     @Override
     public Pairs generate(CurriculumDetail curriculumDetail) {
         Pairs pairs = Pairs.init();
+        List<String> selectedCrew = new ArrayList<>();
         if (curriculumDetail.isBackEnd()) {
-            pairs = generateBackendPairs(curriculumDetail, pairs);
+            selectedCrew = backEndCrew;
         }
         if (!curriculumDetail.isBackEnd()) {
-            pairs = generateFrontendPairs(curriculumDetail, pairs);
+            selectedCrew = frontEndCrew;
         }
+        generatePairs(curriculumDetail, pairs, selectedCrew);
         return pairs;
     }
 
-    private Pairs generateFrontendPairs(CurriculumDetail curriculumDetail, Pairs pairs) {
-        List<String> frontShuffled = Randoms.shuffle(frontEndCrew);
-        for (int index = 0; index < frontShuffled.size(); index = index + 2) {
-            if (isThreeCountPairCase(frontShuffled, index)) {
-                Crew firstCrew = Crew.of(Course.FRONTEND, frontShuffled.get(index));
-                Crew secondCrew = Crew.of(Course.FRONTEND, frontShuffled.get(index + 1));
-                Crew thirdCrew = Crew.of(Course.FRONTEND, frontShuffled.get(index + 2));
-
-                Pair pair = Pair.of(Arrays.asList(firstCrew, secondCrew, thirdCrew), curriculumDetail.getLevel());
-
-                pairs.add(pair);
+    private void generatePairs(CurriculumDetail curriculumDetail, Pairs pairs, List<String> selectedCrew) {
+        List<String> shuffledCrew = Randoms.shuffle(selectedCrew);
+        for (int index = 0; index < shuffledCrew.size(); index += 2) {
+            if (isThreeCountPairCase(shuffledCrew, index)) {
+                addThreeCountPair(curriculumDetail, pairs, shuffledCrew, index);
                 break;
             }
-            if (!isThreeCountPairCase(frontShuffled, index) ){
-                Crew firstCrew = Crew.of(Course.FRONTEND, frontShuffled.get(index));
-                Crew secondCrew = Crew.of(Course.FRONTEND, frontShuffled.get(index + 1));
-
-                Pair pair = Pair.of(Arrays.asList(firstCrew, secondCrew), curriculumDetail.getLevel());
-
-                pairs.add(pair);
-            }
+            addTwoCountPair(curriculumDetail, pairs, shuffledCrew, index);
         }
-        return pairs;
     }
 
-    private Pairs generateBackendPairs(CurriculumDetail curriculumDetail, Pairs pairs) {
-        List<String> backendShuffled = Randoms.shuffle(backEndCrew);
-        for (int index = 0; index < backendShuffled.size(); index = index + 2) {
-            if (isThreeCountPairCase(backendShuffled, index)) {
-                Crew firstCrew = Crew.of(Course.BACKEND, backendShuffled.get(index));
-                Crew secondCrew = Crew.of(Course.BACKEND, backendShuffled.get(index + 1));
-                Crew thirdCrew = Crew.of(Course.BACKEND, backendShuffled.get(index + 2));
+    private void addThreeCountPair(CurriculumDetail curriculumDetail, Pairs pairs, List<String> shuffledCrew, int index) {
+        List<Crew> crewList = createCrewList(curriculumDetail.getCourse(), shuffledCrew.get(index), shuffledCrew.get(index + 1), shuffledCrew.get(index + 2));
+        pairs.add(Pair.of(crewList, curriculumDetail.getLevel()));
+    }
 
-                Pair pair = Pair.of(Arrays.asList(firstCrew, secondCrew, thirdCrew), curriculumDetail.getLevel());
+    private void addTwoCountPair(CurriculumDetail curriculumDetail, Pairs pairs, List<String> shuffledCrew, int index) {
+        List<Crew> crewList = createCrewList(curriculumDetail.getCourse(), shuffledCrew.get(index), shuffledCrew.get(index + 1));
+        pairs.add(Pair.of(crewList, curriculumDetail.getLevel()));
+    }
 
-                pairs.add(pair);
-            }
-            if (!isThreeCountPairCase(backendShuffled, index) ){
-                Crew firstCrew = Crew.of(Course.BACKEND, backendShuffled.get(index));
-                Crew secondCrew = Crew.of(Course.BACKEND, backendShuffled.get(index + 1));
-
-                Pair pair = Pair.of(Arrays.asList(firstCrew, secondCrew), curriculumDetail.getLevel());
-
-                pairs.add(pair);
-            }
+    private List<Crew> createCrewList(Course course, String... crewNames) {
+        List<Crew> crewList = new ArrayList<>();
+        for (String crewName : crewNames) {
+            crewList.add(Crew.of(course, crewName));
         }
-        return pairs;
+        return crewList;
     }
 
     private boolean isThreeCountPairCase(List<String> backendShuffled, int index) {

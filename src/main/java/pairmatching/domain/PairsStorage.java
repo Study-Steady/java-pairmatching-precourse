@@ -39,4 +39,8 @@ public class PairsStorage {
     public boolean containsOf(CurriculumDetail curriculumDetail) {
         return pairsStorage.containsKey(curriculumDetail);
     }
+
+    public void initialize() {
+        pairsStorage.clear();
+    }
 }
