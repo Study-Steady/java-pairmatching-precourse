@@ -61,11 +61,4 @@ public class InputView {
         validator.validateRematchOption(rematchOption, "재매치 여부");
         return RematchOption.from(rematchOption);
     }
-
-//    public Template inputTemplate() {
-//        printer.printLine("");
-//        String template = reader.readLine();
-//        validator.validate(template, "템플릿");
-//        return new Template();
-//    }
 }

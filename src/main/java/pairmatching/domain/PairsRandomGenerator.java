@@ -57,6 +57,7 @@ public class PairsRandomGenerator implements PairsGenerator {
                 Pair pair = Pair.of(Arrays.asList(firstCrew, secondCrew, thirdCrew), curriculumDetail.getLevel());
 
                 pairs.add(pair);
+                break;
             }
             if (!isThreeCountPairCase(frontShuffled, index) ){
                 Crew firstCrew = Crew.of(Course.FRONTEND, frontShuffled.get(index));
@@ -102,7 +103,7 @@ public class PairsRandomGenerator implements PairsGenerator {
         return index == backendShuffled.size() - 3;
     }
 
-    private boolean isOddSize(List<String> backendShuffled) {
-        return backendShuffled.size() % 2 != 0;
+    private boolean isOddSize(List<String> shuffledList) {
+        return shuffledList.size() % 2 != 0;
     }
 }

@@ -7,7 +7,7 @@ public enum MainOption {
     FAIR_SEARCHING("2"),
     FAIR_INIT("3"),
     QUIT("Q"),
-    ;
+    DEFAULT("");
 
     private final String userCommand;
 
@@ -32,5 +32,9 @@ public enum MainOption {
 
     public boolean isFairInit() {
         return this.equals(FAIR_INIT);
+    }
+
+    public boolean isQuit(MainOption mainOption) {
+        return this.equals(QUIT);
     }
 }

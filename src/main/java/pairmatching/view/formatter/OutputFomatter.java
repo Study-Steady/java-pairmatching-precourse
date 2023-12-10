@@ -1,14 +1,15 @@
 package pairmatching.view.formatter;
 
 import java.util.List;
-import pairmatching.common.Symbol;
+import java.util.stream.Collectors;
 import pairmatching.domain.Crew;
 import pairmatching.domain.Pair;
 
 public class OutputFomatter {
-    public static final String WINNERS_SEPARATOR = Symbol.COMMA;
-
     public static String toPairMatching(Pair pair) {
         List<Crew> crews = pair.getCrews();
-        return String.join(" : ", crews);
+        return crews.stream()
+                .map(crew -> crew.getCrewName().getCrewName())
+                .collect(Collectors.joining(" : "));
+    }
 }

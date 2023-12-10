@@ -21,26 +21,28 @@ public class PairMatchingController {
     }
 
     public void run() {
-        MainOption mainOption = inputView.inputMainOption();
+        MainOption mainOption = MainOption.DEFAULT;
         PairsStorage pairsStorage = PairsStorage.init();
 
-        handlePairMatching(mainOption, pairsStorage);
-        handlePairSearching(mainOption, pairsStorage);
-        handlePairInit(mainOption);
+        while (!mainOption.isQuit(mainOption)) {
+            mainOption = readWithRetry(inputView::inputMainOption);
+
+            handlePairMatching(mainOption, pairsStorage);
+            handlePairSearching(mainOption, pairsStorage);
+            handlePairInit(mainOption, pairsStorage);
+        }
 
     }
 
-    private void handlePairInit(MainOption mainOption) {
-        PairsStorage pairsStorage;
+    private void handlePairInit(MainOption mainOption, PairsStorage pairsStorage) {
         if (mainOption.isFairInit()) {
             pairsStorage = PairsStorage.init();
-            run();
         }
     }
 
     private void handlePairSearching(MainOption mainOption, PairsStorage pairsStorage) {
         if (mainOption.isFairSearching()) {
-            CurriculumDetail curriculumDetail = inputView.inputCurriculumDetail();
+            CurriculumDetail curriculumDetail = readWithRetry(inputView::inputCurriculumDetail);
 
             if (pairsStorage.containsOf(curriculumDetail)) {
                 outputView.printPairsMatching(pairsStorage, curriculumDetail);
@@ -48,20 +50,19 @@ public class PairMatchingController {
 
             if (!pairsStorage.containsOf(curriculumDetail)) {
                 outputView.printNoRecord();
-                run();
             }
         }
     }
 
     private void handlePairMatching(MainOption mainOption, PairsStorage pairsStorage) {
         if (mainOption.isFairMatching()) {
-            CurriculumDetail curriculumDetail = inputView.inputCurriculumDetail();
+            CurriculumDetail curriculumDetail = readWithRetry(inputView::inputCurriculumDetail);
 
             if (pairsStorage.containsOf(curriculumDetail)) {
-                RematchOption rematchOption = inputView.inputRematchOption();
+                RematchOption rematchOption = readWithRetry(inputView::inputRematchOption);
 
                 if (!rematchOption.isRematch()) {
-                    run();
+                    return;
                 }
             }
             pairsStorage.addMathcingsOf(curriculumDetail, pairsGenerator);
@@ -75,15 +76,6 @@ public class PairMatchingController {
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
             return readWithRetry(supplier);
-        }
-    }
-
-    private <T, R> R readWithRetry(Function<T, R> function, T input) {
-        try {
-            return function.apply(input);
-        } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e.getMessage());
-            return readWithRetry(function, input);
         }
     }
 }

@@ -1,6 +1,7 @@
 package pairmatching.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CurriculumDetail {
 
@@ -31,5 +32,22 @@ public class CurriculumDetail {
 
     public boolean isSameLevel(CurriculumDetail inpuCurriculumDetail) {
         return this.level.equals(inpuCurriculumDetail.level);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CurriculumDetail that = (CurriculumDetail) o;
+        return course == that.course && level == that.level && mission == that.mission;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(course, level, mission);
     }
 }
