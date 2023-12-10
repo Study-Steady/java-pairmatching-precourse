@@ -17,6 +17,10 @@ public class InputHandler {
         return receiveValidatedInput(inputView::inputFunctionCommand);
     }
 
+    public String receiveValidatedPairMatchingOptions() {
+        return receiveValidatedInput(inputView::inputPairMatchingOptions);
+    }
+
     private <T> T receiveValidatedInput(Supplier<T> inputView) {
         while (true) {
             try {
