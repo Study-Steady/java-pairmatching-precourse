@@ -54,6 +54,7 @@ public class OutputView {
 
     public void printNoMatchingHistoryMessage() {
         System.out.println("[ERROR] 매칭 이력이 없습니다.");
+        printNewLine();
     }
 
     public void printNewLine() {

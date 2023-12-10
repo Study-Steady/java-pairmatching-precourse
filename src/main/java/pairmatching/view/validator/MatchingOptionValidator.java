@@ -1,7 +1,6 @@
 package pairmatching.view.validator;
 
 import pairmatching.domain.Course;
-import pairmatching.domain.Level;
 import pairmatching.domain.LevelInfos;
 import pairmatching.util.StringConvertor;
 

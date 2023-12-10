@@ -15,4 +15,12 @@ public class Pairs {
                 .map(Pair::getPairNames)
                 .collect(Collectors.toList());
     }
+
+    public void clear() {
+        pairs.clear();
+    }
+
+    public boolean isEmpty() {
+        return pairs.isEmpty();
+    }
 }

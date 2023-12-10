@@ -17,4 +17,9 @@ public class InputView {
         MatchingOptionValidator.validate(input);
         return input;
     }
+
+    public String inputRetryMatching() {
+        String input = Console.readLine();
+        return input;
+    }
 }
