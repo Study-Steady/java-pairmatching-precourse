@@ -1,7 +1,22 @@
 package pairmatching;
 
+import pairmatching.controller.PairMatchingController;
+import pairmatching.view.InputView;
+import pairmatching.view.OutputView;
+import pairmatching.view.printer.ConsolePrinter;
+import pairmatching.view.printer.Printer;
+import pairmatching.view.reader.ConsoleReader;
+import pairmatching.view.reader.Reader;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO 구현 진행
+        Reader reader = new ConsoleReader();
+        Printer printer = new ConsolePrinter();
+
+        InputView inputView = InputView.of(reader, printer);
+        OutputView outputView = new OutputView(printer);
+
+        PairMatchingController pairMatchingController = new PairMatchingController(inputView, outputView);
+        pairMatchingController.run();
     }
 }
