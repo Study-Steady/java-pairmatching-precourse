@@ -22,6 +22,15 @@ public class PairMatchingHistoryRepository {
                 .findFirst();
     }
 
+    public PairMatchingHistory getOne(PairMatchingRequest request) {
+        return findOne(request).orElseThrow(() -> new IllegalArgumentException("No History exist"));
+    }
+
+    public boolean exists(PairMatchingRequest request) {
+        return this.histories.stream()
+                .anyMatch(history -> history.matches(request.getCourse(), request.getMission()));
+    }
+
     public void initialize() {
         clearCrewMetHistory();
         this.histories.clear();
@@ -32,6 +41,10 @@ public class PairMatchingHistoryRepository {
                 .flatMap(history -> history.getPairs().stream())
                 .flatMap(pair -> pair.getCrews().stream())
                 .forEach(Crew::clearMetHistory);
+    }
+
+    public void delete(PairMatchingRequest request) {
+        this.histories.remove(getOne(request));
     }
 
 }

@@ -64,8 +64,28 @@ public class MainController {
 
     private void matchPair(PairMatcher pairMatcher) {
         PairMatchingRequest request = inputPairMatchingRequest();
+
+        while (pairMatchingHistoryRepository.exists(request)) {
+            RematchingChoice choice = inputRematchingChoice();
+
+            if (choice.isYes()) {
+                pairMatchingHistoryRepository.delete(request);
+                break;
+            }
+
+            request = input(inputView::inputPairMatchingRequestWithoutBoardGuide);
+        }
+
+        createNewPairMatching(pairMatcher, request);
+    }
+
+    private void createNewPairMatching(PairMatcher pairMatcher, PairMatchingRequest request) {
         PairMatchingHistory history = pairMatcher.match(request);
         outputView.showPairMatchingHistory(history);
+    }
+
+    private RematchingChoice inputRematchingChoice() {
+        return input(() -> RematchingChoice.getBy(inputView.inputRematchingChoice()));
     }
 
     private void queryHistory(PairMatchingRequest request) {

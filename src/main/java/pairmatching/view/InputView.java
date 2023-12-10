@@ -25,7 +25,17 @@ public class InputView {
 
     public PairMatchingRequest inputPairMatchingRequest() {
         printCourseMissionInputGuide();
+        return getPairMatchingRequest();
+    }
 
+    public PairMatchingRequest inputPairMatchingRequestWithoutBoardGuide() {
+        println("과정, 레벨, 미션을 선택하세요.\n"
+                + "ex) 백엔드, 레벨1, 자동차경주");
+
+        return getPairMatchingRequest();
+    }
+
+    private PairMatchingRequest getPairMatchingRequest() {
         String input = readLine();
         validate(input);
         List<String> split = StringConvertor.split(input, ",");
@@ -44,6 +54,16 @@ public class InputView {
         if (split.size() != 3) {
             throw new IllegalArgumentException("Not Valid Input");
         }
+    }
+
+    public String inputRematchingChoice() {
+        println("매칭 정보가 있습니다. 다시 매칭하시겠습니까?\n"
+                + "네 | 아니오");
+
+        String input = readLine();
+        StringValidator.validateHasText(input);
+
+        return input;
     }
 
     private void printCourseMissionInputGuide() {
