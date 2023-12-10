@@ -1,6 +1,7 @@
 package pairmatching.view;
 
 
+import pairmatching.domain.MainOption;
 import pairmatching.view.printer.Printer;
 import pairmatching.view.reader.Reader;
 import pairmatching.view.validator.InputValidator;
@@ -18,6 +19,13 @@ public class InputView {
 
     public static InputView of(Reader reader, Printer printer) {
         return new InputView(reader, printer, InputValidator.getInstance());
+    }
+
+    public MainOption inputMainOption() {
+        printer.printLine("");
+        String mainOption = reader.readLine();
+        validator.validateMainOption(mainOption, "기능 선택");
+        return MainOption.from(mainOption);
     }
 
 //    public Template inputTemplate() {

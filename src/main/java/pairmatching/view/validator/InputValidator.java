@@ -1,6 +1,7 @@
 package pairmatching.view.validator;
 
 import pairmatching.common.Symbol;
+import pairmatching.util.validator.StringValidator;
 
 public class InputValidator {
     private static InputValidator inputValidator;
@@ -14,6 +15,10 @@ public class InputValidator {
             return new InputValidator();
         }
         return inputValidator;
+    }
+
+    public void validateMainOption(String mainOption, String target) {
+        StringValidator.validateBlank(mainOption, target);
     }
 
 //    public static void validateNumber(String template, String target) {
