@@ -1,24 +1,22 @@
 package pairmatching.model.pair;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import pairmatching.model.crew.Crew;
 
 public class Pair {
-    private final Set<Crew> crews;
+    private final Set<String> crews;
 
-    private Pair(Set<Crew> crews) {
+    private Pair(Set<String> crews) {
         this.crews = crews;
     }
 
-    public static Pair from(List<Crew> crews) {
-        return new Pair(Set.copyOf(crews));
+    public static Pair from(List<String> crews) {
+        return new Pair(new HashSet<>(crews));
     }
 
     public List<String> getPairCrewNames() {
-        return crews.stream()
-            .map(Crew::getName)
-            .collect(Collectors.toList());
+        return new ArrayList<>(crews);
     }
 }
