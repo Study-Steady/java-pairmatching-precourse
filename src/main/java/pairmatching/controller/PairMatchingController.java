@@ -1,6 +1,7 @@
 package pairmatching.controller;
 
 import java.util.function.Supplier;
+import pairmatching.domain.CurriculumDetail;
 import pairmatching.domain.MainOption;
 import pairmatching.domain.PairsGenerator;
 import pairmatching.view.InputView;
@@ -19,7 +20,8 @@ public class PairMatchingController {
 
     public void run() {
         MainOption mainOption = inputView.inputMainOption();
-    }
+        CurriculumDetail curriculumDetail = inputView.inputCurriculumDetail();
+    }지
 
     private <T> T readWithRetry(Supplier<T> supplier) {
         try {

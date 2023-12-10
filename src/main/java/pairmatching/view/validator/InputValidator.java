@@ -1,11 +1,14 @@
 package pairmatching.view.validator;
 
+import java.util.List;
 import pairmatching.common.Symbol;
+import pairmatching.util.validator.GeneralValidator;
 import pairmatching.util.validator.StringValidator;
 
 public class InputValidator {
     private static InputValidator inputValidator;
-    public static final String TEMPLATE_SEPARATOR = Symbol.COMMA;
+    public static final String CURRICULUM_DETAIL_SEPARATOR = Symbol.COMMA;
+    public static final String TEMPLATE_SEPARATOR = CURRICULUM_DETAIL_SEPARATOR;
 
     private InputValidator() {
     }
@@ -19,6 +22,14 @@ public class InputValidator {
 
     public void validateMainOption(String mainOption, String target) {
         StringValidator.validateBlank(mainOption, target);
+    }
+
+    public void validateCurriculumDetail(String curriculumDetail, String target) {
+        StringValidator.validateBlank(curriculumDetail, target);
+        GeneralValidator.validateDuplicateSubstring(CURRICULUM_DETAIL_SEPARATOR, curriculumDetail, target);
+        GeneralValidator.validateStartSubstring(CURRICULUM_DETAIL_SEPARATOR, curriculumDetail, target);
+        GeneralValidator.validateEndSubstring(CURRICULUM_DETAIL_SEPARATOR, curriculumDetail, target);
+        GeneralValidator.validateSplittedCount(CURRICULUM_DETAIL_SEPARATOR, curriculumDetail, 3, target);
     }
 
 //    public static void validateNumber(String template, String target) {

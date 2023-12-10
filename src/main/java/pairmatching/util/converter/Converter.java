@@ -12,7 +12,7 @@ public class Converter {
         return Arrays.asList(value.split(separator));
     }
 
-    public static List<String> splitToTimedList(String separator, String value) {
+    public static List<String> splitToTrimedList(String separator, String value) {
         return Arrays.stream(value.split(separator))
                 .map(String::trim)
                 .collect(Collectors.toList());
