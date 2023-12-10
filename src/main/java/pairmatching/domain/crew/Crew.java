@@ -43,6 +43,10 @@ public class Crew {
         return this.course.is(course);
     }
 
+    public boolean matchesName(String crewName) {
+        return this.name.equals(crewName);
+    }
+
     public String getName() {
         return name;
     }
@@ -64,8 +68,13 @@ public class Crew {
         return Objects.hash(course, name);
     }
 
-    public boolean matchesName(String crewName) {
-        return this.name.equals(crewName);
+    @Override
+    public String toString() {
+        return "Crew{" +
+                "course=" + course +
+                ", name='" + name + '\'' +
+                ", metHistory=" + metHistory +
+                '}';
     }
 
 }
