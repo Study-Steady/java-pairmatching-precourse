@@ -24,4 +24,8 @@ public enum FunctionChoice {
                 ));
     }
 
+    public boolean isPairMatching() {
+        return this == PAIR_MATCHING;
+    }
+
 }

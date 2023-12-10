@@ -1,6 +1,6 @@
 package pairmatching.domain;
 
-import pairmatching.domain.parimatching.PairMatchingRequest;
+import java.util.stream.Stream;
 
 public enum Mission {
 
@@ -13,20 +13,33 @@ public enum Mission {
     IMPROVEMENT("성능개선", Level.LEVEL4),
     DEPLOY("배포", Level.LEVEL4);
 
-    private final String description;
+    private final String name;
     private final Level level;
 
-    Mission(String description, Level level) {
-        this.description = description;
+    Mission(String name, Level level) {
+        this.name = name;
         this.level = level;
     }
 
-    public String getDescription() {
-        return description;
+    public static Mission getBy(String name) {
+        return Stream.of(Mission.values())
+                .filter(mission -> mission.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("No Matching Mission for name=%s", name)
+                ));
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean is(Mission mission) {
         return this == mission;
+    }
+
+    public boolean matchesLevel(Level level) {
+        return this.level == level;
     }
 
 }

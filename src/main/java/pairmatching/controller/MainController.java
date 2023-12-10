@@ -1,6 +1,7 @@
 package pairmatching.controller;
 
 import java.util.function.Supplier;
+import pairmatching.domain.parimatching.PairMatchingRequest;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -16,6 +17,14 @@ public class MainController {
 
     public void run() {
         FunctionChoice choice = inputChoice();
+
+        if (choice.isPairMatching()) {
+            PairMatchingRequest request = inputPairMatchingRequest();
+        }
+    }
+
+    private PairMatchingRequest inputPairMatchingRequest() {
+        return input(() -> inputView.inputPairMatchingRequest());
     }
 
     private FunctionChoice inputChoice() {
