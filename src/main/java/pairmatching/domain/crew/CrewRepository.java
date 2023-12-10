@@ -1,7 +1,6 @@
 package pairmatching.domain.crew;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import pairmatching.domain.Course;
@@ -23,7 +22,6 @@ public class CrewRepository {
         crewRepository.addAll(setUpCrew(Course.BACKEND, BACKEND_CREW_FILE_PATH));
         crewRepository.addAll(setUpCrew(Course.FRONTEND, FRONTEND_CREW_FILE_PATH));
 
-        System.out.println(Arrays.toString(crewRepository.crews.toArray()));
         return crewRepository;
     }
 
