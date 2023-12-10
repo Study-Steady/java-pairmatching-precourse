@@ -32,25 +32,18 @@ public class PairMatcher {
                 retryCount--;
                 continue;
             }
-
-            // crew 들간 만남 추가
-            pairs.forEach(pair -> pair.addMetHistory(request.getMission()));
-
-            PairMatchingHistory history = createMatchingHistory(request, pairs);
-            matchingHistoryRepository.save(history);
-
-            return history;
+            return createMatchingHistory(request, pairs);
         }
 
         throw new IllegalArgumentException("매칭 기회를 모두 소진했습니다.");
     }
 
     private PairMatchingHistory createMatchingHistory(PairMatchingRequest request, List<Pair> pairs) {
-        return new PairMatchingHistory(
-                request.getCourse(),
-                request.getMission(),
-                pairs
-        );
+        pairs.forEach(pair -> pair.addMetHistory(request.getMission()));
+        PairMatchingHistory history = new PairMatchingHistory(request.getCourse(), request.getMission(), pairs);
+        matchingHistoryRepository.save(history);
+
+        return history;
     }
 
     private List<Pair> createNewPairs(List<String> shuffledCrew, Course course) {
