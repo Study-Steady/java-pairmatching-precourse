@@ -1,6 +1,5 @@
 package pairmatching.domain.crew;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import pairmatching.domain.Course;
@@ -15,14 +14,6 @@ public class CrewRepository {
 
     public static CrewRepository initialize() {
         // 마크다운 파일 읽어와서, crew 형태로 변경
-        return null;
-    }
-
-    public List<Crew> getCrews() {
-        return Collections.unmodifiableList(crews);
-    }
-
-    public List<Crew> fetchBackendCrewNames() {
         return null;
     }
 
