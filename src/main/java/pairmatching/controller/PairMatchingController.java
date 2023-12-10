@@ -94,7 +94,7 @@ public class PairMatchingController {
             shuffleCount++;
         } while (shuffleCount < 4);
 
-        if (shuffleCount == 4) { // 에러 메시지를 출력하라고만 나와있어서 출력만 했습니다.
+        if (shuffleCount == 4) { // 잘못된 입력값에 의한 것이 아니고 에러 메시지를 출력하라고만 나와있어서 출력만 했습니다!
             outputView.printErrorMessage(Output.OVER_TIMED_MATCH_TRIED);
         }
     }
