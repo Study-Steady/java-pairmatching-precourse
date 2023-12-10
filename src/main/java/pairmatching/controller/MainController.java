@@ -80,8 +80,12 @@ public class MainController {
     }
 
     private void createNewPairMatching(PairMatcher pairMatcher, PairMatchingRequest request) {
-        PairMatchingHistory history = pairMatcher.match(request);
-        outputView.showPairMatchingHistory(history);
+        try {
+            PairMatchingHistory history = pairMatcher.match(request);
+            outputView.showPairMatchingHistory(history);
+        } catch (IllegalStateException e) {
+            outputView.showErrorMessage(e.getMessage());
+        }
     }
 
     private RematchingChoice inputRematchingChoice() {

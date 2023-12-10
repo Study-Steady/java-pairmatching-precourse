@@ -35,7 +35,7 @@ public class PairMatcher {
             return createMatchingHistory(request, pairs);
         }
 
-        throw new IllegalArgumentException("매칭 기회를 모두 소진했습니다.");
+        throw new IllegalStateException("매칭 기회를 모두 소진했습니다.");
     }
 
     private PairMatchingHistory createMatchingHistory(PairMatchingRequest request, List<Pair> pairs) {
